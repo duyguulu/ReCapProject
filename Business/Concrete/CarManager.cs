@@ -1,0 +1,47 @@
+﻿using Business.Abstract;
+using DataAccess.Abstract;
+using Entities.Concrete;
+using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Business.Concrete
+{
+	public class CarManager : ICarService
+	{
+		ICarDal _carDal;
+		public CarManager(ICarDal carDal)
+		{
+			_carDal = carDal;
+		}
+
+		public void Add(Car car)
+		{
+			if (car.DailyPrice < 0 )
+			{
+				Console.WriteLine("Günlük değer 0(sıfır)' dan büyük olmalı.");
+			}
+			else
+			{
+				_carDal.Add(car);
+				Console.WriteLine("Araba başarı ile eklenmiştir.");
+			}
+		}
+
+		public List<Car> GetAll()
+		{
+			//iş kodları:
+			return _carDal.GetAll();
+		}
+
+		public List<Car> GetCarsByBrandId(int id)
+		{
+			return _carDal.GetAll(p => p.BrandId == id);
+		}
+
+		public List<Car> GetCarsByColorId(int id)
+		{
+			return _carDal.GetAll(p => p.ColorId == id);
+		}
+	}
+}
