@@ -16,6 +16,6 @@ namespace DataAccess.Abstract
 
 		////ben bunu id olarak düşündüm istersen kontrol et
 		//List<Car> GetById(int Id);
-		List<CarDetailDto> GetProductDetails();
+		List<CarDetailDto> GetCarDetails();
 	}
 }
