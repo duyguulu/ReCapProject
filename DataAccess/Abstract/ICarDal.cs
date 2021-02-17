@@ -1,11 +1,13 @@
-﻿using Entities.Concrete;
+﻿using Core.DataAccess;
+using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace DataAccess.Abstract
 {
-	public interface ICarDal:IEntityRepository<Car>
+	public interface ICarDal : IEntityRepository<Car>
 	{
 		//List<Car> GetAll();
 		//void Add(Car car);
@@ -14,5 +16,6 @@ namespace DataAccess.Abstract
 
 		////ben bunu id olarak düşündüm istersen kontrol et
 		//List<Car> GetById(int Id);
+		List<CarDetailDto> GetProductDetails();
 	}
 }
