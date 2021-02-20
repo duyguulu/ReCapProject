@@ -10,7 +10,7 @@ namespace ConsoleUI
 	{
 		static void Main(string[] args)
 		{
-			CarManager carManager = GetAllCarTest();
+			BrandTest();
 
 			//CarManager carManager = GetCarsByBrandTest();
 			//BrandTest();
@@ -25,9 +25,19 @@ namespace ConsoleUI
 		private static void BrandTest()
 		{
 			BrandManager brandManager = new BrandManager(new EfBrandDal());
-			foreach (var brand in brandManager.GetAll())
+			
+			var result = brandManager.GetAll();
+			if (result.Success == true)
 			{
-				Console.WriteLine(brand.BrandId + "-" + brand.BrandName);
+				foreach (var brand in result.Data)
+				{
+					Console.WriteLine(brand.BrandId + "-" + brand.BrandName);
+				}
+			}
+			else
+			{
+				Console.WriteLine("bug");
+				Console.WriteLine(result.Message);
 			}
 		}
 
@@ -36,47 +46,76 @@ namespace ConsoleUI
 			CarManager carManager = new CarManager(new InMemoryCarDal());
 			Console.WriteLine("\n \n Yeni araç ekleme ve tüm listenin tekrardan getirilmesi:");
 			//carManager.Add(new Car { BrandId = 1, ColorId = 1, DailyPrice=5, Descriptions="4. Araba"});
-			foreach (var car in carManager.GetAll())
+			var result = carManager.GetAll();
+			if (result.Success == true)
 			{
-				Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+				foreach (var car in result.Data)
+				{
+					Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+				}
+			}
+			else
+			{
+				Console.WriteLine(result.Message);
 			}
 		}
 
-		private static CarManager GetCarByColorIdTest()
+		private static void GetCarByColorIdTest()
 		{
 			CarManager carManager = new CarManager(new EfCarDal());
 			Console.WriteLine("\n \n Color=2 ' ye göre getirme:");
-			foreach (var car in carManager.GetCarsByColorId(2))
+			var result = carManager.GetCarsByColorId(2);
+			if (result.Success == true)
 			{
-				Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+				foreach (var car in result.Data)
+				{
+					Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+				}
 			}
-
-			return carManager;
+			else
+			{
+				Console.WriteLine(result.Message);
+			}
 		}
 
-		private static CarManager GetCarsByBrandTest()
+		private static void GetCarsByBrandTest()
 		{
 			CarManager carManager = new CarManager(new EfCarDal());
 			Console.WriteLine("\n \n BrandId=1 ' e göre getirme:");
-			foreach (var car in carManager.GetCarsByBrandId(1))
+
+			var result = carManager.GetCarsByBrandId(1);
+			if (result.Success == true)
 			{
-				Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+				foreach (var car in result.Data)
+				{
+					Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+				}
+			}
+			else
+			{
+				Console.WriteLine(result.Message);
 			}
 
-			return carManager;
 		}
 
-		private static CarManager GetAllCarTest()
+		private static void GetAllCarTest()
 		{
 			CarManager carManager = new CarManager(new EfCarDal());
 
 			Console.WriteLine("Araba ismi - Marka Adı - Renk - Günlük Ücreti");
-			foreach (var car in carManager.GetCarDetails())
-			{
-				Console.WriteLine(car.CarName + "-" + car.BrandName + "-" + car.ColorName + "-" + car.DailyPrice);
-			}
 
-			return carManager;
+			var result = carManager.GetCarDetails();
+			if (result.Success == true)
+			{
+				foreach (var car in result.Data)
+				{
+					Console.WriteLine(car.CarName + "-" + car.BrandName + "-" + car.ColorName + "-" + car.DailyPrice);
+				}
+			}
+			else
+			{
+				Console.WriteLine(result.Message);
+			}
 		}
 	}
 }

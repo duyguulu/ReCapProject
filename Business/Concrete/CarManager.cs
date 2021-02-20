@@ -31,6 +31,12 @@ namespace Business.Concrete
 			}
 		}
 
+		public IResult Delete(Car car)
+		{
+			_carDal.Delete(car);
+			return new SuccessResult(Messages.CarDeleted);
+		}
+
 		public IDataResult<List<Car>> GetAll()
 		{
 			//iş kodları:
@@ -39,6 +45,11 @@ namespace Business.Concrete
 				return new ErrorDataResult<List<Car>>(Messages.MaintenanceTime);
 			}
 			return new SuccessDataResult<List<Car>>(_carDal.GetAll());
+		}
+
+		public IDataResult<Car> GetById(int carId)
+		{
+			return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
 		}
 
 		public IDataResult<List<CarDetailDto>> GetCarDetails()
@@ -54,6 +65,12 @@ namespace Business.Concrete
 		public IDataResult<List<Car>> GetCarsByColorId(int colorId)
 		{
 			return new SuccessDataResult<List<Car>>(_carDal.GetAll(p => p.ColorId == colorId));
+		}
+
+		public IResult Update(Car car)
+		{
+			_carDal.Update(car);
+			return new SuccessResult(Messages.CarUpdated);
 		}
 	}
 }
