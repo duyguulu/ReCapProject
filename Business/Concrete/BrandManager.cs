@@ -31,7 +31,12 @@ namespace Business.Concrete
 
 		public IDataResult<List<Brand>> GetAll()
 		{
-			return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
+			if (DateTime.Now.Hour == 22)
+			{
+				return new ErrorDataResult<List<Brand>>(Messages.MaintenanceTime);
+			}
+			return new SuccessDataResult<List<Brand>>(_brandDal.GetAll(), Messages.Listed);
+			//return new SuccessDataResult<List<Brand>>(_brandDal.GetAll());
 		}
 
 		public IDataResult<Brand> GetById(int brandId)
