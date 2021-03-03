@@ -24,7 +24,7 @@ namespace Business.Concrete
 			_carImageDal = carImageDal;
 		}
 
-		[ValidationAspect(typeof(CarImageValidator))]
+		//[ValidationAspect(typeof(CarImageValidator))]
 		public IResult Add(IFormFile file, CarImage carImage)
 		{
 			IResult result = BusinessRules.Run(CheckImageLimitExceeded(carImage.CarId));
@@ -34,6 +34,7 @@ namespace Business.Concrete
 			}
 			carImage.ImagePath = FileHelper.Add(file);
 			carImage.DateT = DateTime.Now;
+			//carImage.DateT = "0303";
 			_carImageDal.Add(carImage);
 			return new SuccessResult();
 		}
@@ -81,6 +82,7 @@ namespace Business.Concrete
 		{
 			carImage.ImagePath = FileHelper.Update(_carImageDal.Get(p => p.CarImageId == carImage.CarImageId).ImagePath, file);
 			carImage.DateT = DateTime.Now;
+			//carImage.DateT = "0303";
 			_carImageDal.Update(carImage);
 			return new SuccessResult();
 		}
@@ -103,6 +105,7 @@ namespace Business.Concrete
 			if (!result)
 			{
 				return new List<CarImage> { new CarImage { CarId = id, ImagePath = path, DateT = DateTime.Now } };
+				//return new List<CarImage> { new CarImage { CarId = id, ImagePath = path, DateT = "0303" } };
 			}
 			return _carImageDal.GetAll(p => p.CarId == id);
 		}
