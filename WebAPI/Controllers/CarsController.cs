@@ -13,7 +13,7 @@ namespace WebAPI.Controllers
 	[ApiController]
 	public class CarsController : ControllerBase
 	{
-		/*https://localhost:44306/api/products/add */
+		/*https://localhost:44306/api/cars/add */
 
 		ICarService _carService;
 
