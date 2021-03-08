@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -37,5 +38,6 @@ namespace Business.Constants
 		public static string RentalDelivered = "Araba teslim edildi";
 
 		public static string CarImageLimitExceeded = "Araba resim limiti aşıldı";
+		public  static string AuthorizationDenied="Yetkiniz yok";
 	}
 }
