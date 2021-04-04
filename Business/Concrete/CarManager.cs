@@ -2,6 +2,9 @@
 using Business.BusinessAspect.Autofac;
 using Business.Constants;
 using Business.ValidationRules.FluentValidation;
+using Core.Aspect.Autofac.Caching;
+using Core.Aspect.Autofac.Performance;
+using Core.Aspect.Autofac.Transaction;
 using Core.Aspect.Autofac.Validation;
 using Core.Utilities.Business;
 using Core.Utilities.Results;
@@ -25,6 +28,7 @@ namespace Business.Concrete
 
 		[SecuredOperation("product.add,admin")]
 		[ValidationAspect(typeof(CarValidator))]
+		[CacheRemoveAspect("IProductService.Get")]
 		public IResult Add(Car car)
 		{
 			IResult result = BusinessRules.Run(CheckIfCarNameExist(car.CarName));
@@ -42,6 +46,7 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.CarDeleted);
 		}
 
+		[CacheAspect] //key, value
 		public IDataResult<List<Car>> GetAll()
 		{
 			//iş kodları:
@@ -52,6 +57,8 @@ namespace Business.Concrete
 			return new SuccessDataResult<List<Car>>(_carDal.GetAll());
 		}
 
+		[CacheAspect]
+		[PerformanceAspect(5)]
 		public IDataResult<Car> GetById(int carId)
 		{
 			return new SuccessDataResult<Car>(_carDal.Get(c => c.Id == carId));
@@ -73,6 +80,7 @@ namespace Business.Concrete
 		}
 
 		[ValidationAspect(typeof(CarValidator))]
+		[CacheRemoveAspect("IProductService.Get")]
 		public IResult Update(Car car)
 		{
 			if (CheckIfCarNameExist(car.CarName).Success)
@@ -87,6 +95,19 @@ namespace Business.Concrete
 		{
 			if (_carDal.GetAll(c => c.CarName == carName).Any()) return new ErrorResult(Messages.CarNameAlreadyExist);
 			return new SuccessResult();
+		}
+
+		//burası duzeltilebilinir.
+		[TransactionScopeAspect] //böyle mi yazmalıyız?
+		public IResult AddTransactionalTest(Car car)
+		{
+			Add(car);
+			if (car.DailyPrice < 0)
+			{
+				throw new Exception("");
+			}
+			Add(car);
+			return null;
 		}
 	}
 }

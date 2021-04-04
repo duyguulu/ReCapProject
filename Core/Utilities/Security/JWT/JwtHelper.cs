@@ -12,8 +12,8 @@ using System.Text;
 
 namespace Core.Utilities.Security.JWT
 {
-	public class JwtHelper: ITokenHelper
-	{
+    public class JwtHelper : ITokenHelper
+    {
         public IConfiguration Configuration { get; } //appsetting'dekileri okumaya yarar.
         private TokenOptions _tokenOptions;
         private DateTime _accessTokenExpiration;
