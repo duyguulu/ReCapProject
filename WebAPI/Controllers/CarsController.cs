@@ -33,6 +33,7 @@ namespace WebAPI.Controllers
 			return BadRequest(result);
 		}
 
+
 		[HttpGet("getbyid")]
 		public IActionResult GetById(int id)
 		{
@@ -79,8 +80,8 @@ namespace WebAPI.Controllers
 			return BadRequest(result);
 		}
 
-		[HttpPost("getcardetails")]
-		public IActionResult GetCarDetails(Car car)
+		[HttpGet("getcardetails")]
+		public IActionResult GetCarDetails()
 		{
 			var result = _carService.GetCarDetails();
 			if (result.Success)

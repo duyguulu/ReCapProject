@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Constants;
+using Core.Aspect.Autofac.Caching;
 using Core.Utilities.Results;
 using DataAccess.Abstract;
 using Entities.Concrete;
@@ -29,6 +30,7 @@ namespace Business.Concrete
 			return new SuccessResult(Messages.BrandDeleted);
 		}
 
+		[CacheAspect]
 		public IDataResult<List<Brand>> GetAll()
 		{
 			if (DateTime.Now.Hour == 22)
