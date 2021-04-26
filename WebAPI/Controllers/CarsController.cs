@@ -91,10 +91,10 @@ namespace WebAPI.Controllers
 			return BadRequest(result);
 		}
 
-		[HttpPost("getcarsbybrandid")]
-		public IActionResult GetCarsByBrandId(int id)
+		[HttpGet("getcardetailsbycarid")]
+		public IActionResult GetCarDetailsByCarId(int carId)
 		{
-			var result = _carService.GetCarsByBrandId(id);
+			var result = _carService.GetCarDetailsByCarId(carId);
 			if (result.Success)
 			{
 				return Ok(result);
@@ -102,10 +102,21 @@ namespace WebAPI.Controllers
 			return BadRequest(result);
 		}
 
-		[HttpPost("getcarsbycolordid")]
-		public IActionResult GetCarsByColorId(int id)
+		[HttpGet("getcarsbybrandid")]
+		public IActionResult GetCarsByBrandId(int brandId)
 		{
-			var result = _carService.GetCarsByColorId(id);
+			var result = _carService.GetCarsByBrandId(brandId);
+			if (result.Success)
+			{
+				return Ok(result);
+			}
+			return BadRequest(result);
+		}
+
+		[HttpGet("getcarsbycolordid")]
+		public IActionResult GetCarsByColorId(int colorId)
+		{
+			var result = _carService.GetCarsByColorId(colorId);
 			if (result.Success)
 			{
 				return Ok(result);

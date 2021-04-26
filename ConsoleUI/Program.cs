@@ -69,7 +69,7 @@ namespace ConsoleUI
 			{
 				foreach (var car in result.Data)
 				{
-					Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+					Console.WriteLine(car.ColorId + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
 				}
 			}
 			else
@@ -88,7 +88,7 @@ namespace ConsoleUI
 			{
 				foreach (var car in result.Data)
 				{
-					Console.WriteLine(car.Id + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
+					Console.WriteLine(car.ColorId + "-" + car.ModelYear + "-" + car.DailyPrice + "-" + car.Descriptions);
 				}
 			}
 			else
