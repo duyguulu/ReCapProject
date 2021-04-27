@@ -11,17 +11,18 @@ namespace Core.Utilities.Helpers
 	{
 		public static string Add(IFormFile file)
 		{
+			var result = newPath(file);
 			var sourcepath = Path.GetTempFileName();
 			if (file.Length > 0)
 			{
-				using (var stream= new FileStream(sourcepath, FileMode.Create))
+				using (var stream = new FileStream(sourcepath, FileMode.Create))
 				{
 					file.CopyTo(stream);
 				}
+				File.Move(sourcepath, result.newPath);
 			}
-			var result = newPath(file);
-			File.Move(sourcepath, result);
-			return result;
+			
+			return result.Path2;
 		}
 		public static IResult Delete(string path)
 		{
@@ -40,23 +41,24 @@ namespace Core.Utilities.Helpers
 			var result = newPath(file);
 			if (sourcePath.Length > 0)
 			{
-				using (var stream = new FileStream(result, FileMode.Create))
+				using (var stream = new FileStream(result.newPath, FileMode.Create))
 				{
 					file.CopyTo(stream);
 				}
 			}
 			File.Delete(sourcePath);
-			return result;
+			return result.Path2;
 		}
 
-		public static string newPath(IFormFile file)
+		public static (string newPath, string Path2) newPath(IFormFile file)
 		{
 			FileInfo Info = new FileInfo(file.FileName);
 			string fileExtension = Info.Extension;
-			string path = Environment.CurrentDirectory + @"\Images";
-			var newPath = Guid.NewGuid().ToString() + "_" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + fileExtension;
-			var result = $@"{path}\{newPath}";
-			return result;
+			string path = Environment.CurrentDirectory + @"\wwwroot\upload";
+			//var newPath = Guid.NewGuid().ToString() + "_" + DateTime.Now.Day + "_" + DateTime.Now.Month + "_" + DateTime.Now.Year + fileExtension;
+			var newPath = Guid.NewGuid().ToString() + fileExtension;
+			string result = $@"{path}\{newPath}";
+			return (result, $@"\upload\{newPath}"); ;
 		}
 
 
